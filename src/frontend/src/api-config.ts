@@ -1,6 +1,5 @@
 // API Configuration
-// Import from central config
-import config from '../../../config.json';
+// Use environment variable if available, otherwise fall back to config
+const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-const activeEnv = config.active as 'development' | 'production';
-export const API_BASE_URL = config[activeEnv].backend.apiUrl;
+export const API_BASE_URL = API_URL || 'https://premium-promoters-backend.onrender.com/api';
