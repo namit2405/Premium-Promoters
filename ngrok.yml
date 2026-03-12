@@ -1,0 +1,9 @@
+version: "2"
+authtoken: YOUR_AUTHTOKEN_HERE
+tunnels:
+  frontend:
+    proto: http
+    addr: 5173
+  backend:
+    proto: http
+    addr: 5000

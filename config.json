@@ -1,0 +1,21 @@
+{
+  "development": {
+    "backend": {
+      "url": "http://localhost:5000",
+      "apiUrl": "http://localhost:5000/api"
+    },
+    "frontend": {
+      "url": "http://localhost:5173"
+    }
+  },
+  "production": {
+    "backend": {
+      "url": "https://love-apnic-housewares-plaintiff.trycloudflare.com",
+      "apiUrl": "https://love-apnic-housewares-plaintiff.trycloudflare.com/api"
+    },
+    "frontend": {
+      "url": "https://your-frontend-domain.com"
+    }
+  },
+  "active": "development"
+}
