@@ -1,7 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
+import { useEffect } from "react";
 import App from "./App";
 import { InternetIdentityProvider } from "./hooks/useInternetIdentity";
+import { startKeepAlive } from "./utils/keepAlive";
 import "../index.css";
 
 BigInt.prototype.toJSON = function () {
@@ -16,10 +18,18 @@ declare global {
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <InternetIdentityProvider>
-      <App />
-    </InternetIdentityProvider>
-  </QueryClientProvider>,
-);
+function Root() {
+  useEffect(() => {
+    startKeepAlive();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <InternetIdentityProvider>
+        <App />
+      </InternetIdentityProvider>
+    </QueryClientProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<Root />);
