@@ -75,4 +75,36 @@ router.post('/setup', async (req, res) => {
   }
 });
 
+// Create admin with custom credentials
+router.post('/create-admin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+    
+    // Check if admin with this email exists
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'Admin with this email already exists' });
+    }
+
+    // Create new admin
+    const admin = new Admin({
+      email,
+      password,
+      name: 'Admin'
+    });
+
+    await admin.save();
+    res.json({ 
+      message: 'Admin created successfully', 
+      email: admin.email
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 export default router;
