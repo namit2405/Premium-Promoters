@@ -148,7 +148,7 @@ export default function Footer() {
                   href="mailto:info@premiumpromoters.com"
                   className="text-sm text-foreground/80 hover:text-gold transition-colors"
                 >
-                  info@premiumpromoters.com
+                  PremiumPromoters052@gmail.com
                 </a>
               </li>
               <li>

@@ -18,8 +18,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@premiumpromoters.com",
-    href: "mailto:info@premiumpromoters.com",
+    value: "PremiumPromoters052@gmail.com",
+    href: "PremiumPromoters052@gmail.com",
   },
   {
     icon: Phone,
