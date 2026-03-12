@@ -44,19 +44,32 @@ router.post('/login', async (req, res) => {
 // Create initial admin (run once)
 router.post('/setup', async (req, res) => {
   try {
-    const existingAdmin = await Admin.findOne({});
+    const email = process.env.ADMIN_EMAIL || 'admin@premiumpromoters.com';
+    const password = process.env.ADMIN_PASSWORD || 'admin123';
+    
+    // Check if admin exists
+    const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
-      return res.status(400).json({ message: 'Admin already exists' });
+      return res.json({ 
+        message: 'Admin already exists', 
+        email: existingAdmin.email,
+        canLogin: true 
+      });
     }
 
+    // Create new admin
     const admin = new Admin({
-      email: process.env.ADMIN_EMAIL || 'admin@premiumpromoters.com',
-      password: process.env.ADMIN_PASSWORD || 'admin123',
+      email,
+      password,
       name: 'Admin'
     });
 
     await admin.save();
-    res.json({ message: 'Admin created successfully', email: admin.email });
+    res.json({ 
+      message: 'Admin created successfully', 
+      email: admin.email,
+      canLogin: true 
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
