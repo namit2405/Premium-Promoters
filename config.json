@@ -10,12 +10,12 @@
   },
   "production": {
     "backend": {
-      "url": "https://love-apnic-housewares-plaintiff.trycloudflare.com",
-      "apiUrl": "https://love-apnic-housewares-plaintiff.trycloudflare.com/api"
+      "url": "https://premium-promoters-backend.onrender.com",
+      "apiUrl": "https://premium-promoters-backend.onrender.com/api"
     },
     "frontend": {
       "url": "https://your-frontend-domain.com"
     }
   },
-  "active": "development"
+  "active": "production"
 }
