@@ -136,9 +136,11 @@ export default function TestimonialsSection() {
                     <p className="font-heading font-bold text-foreground">
                       {testimonial.name}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.role}
-                    </p>
+                    {testimonial.role && (
+                      <p className="text-sm text-muted-foreground">
+                        {testimonial.role}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
