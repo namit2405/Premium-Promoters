@@ -103,6 +103,11 @@ const cardVariants = {
               onHoverStart={() => setHoveredIndex(i)}
               onHoverEnd={() => setHoveredIndex(null)}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              onClick={() => {
+                if (item.projectUrl) {
+                  window.open(item.projectUrl, '_blank', 'noopener,noreferrer');
+                }
+              }}
             >
               {/* Real image */}
               <img
