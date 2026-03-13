@@ -1279,7 +1279,7 @@
                     urlInput.value = data.imageUrl;
                     
                     // Show preview
-                    previewEl.src = `${API_URL.replace('/api', '')}${data.imageUrl}`;
+                    previewEl.src = data.imageUrl;
                     previewEl.style.display = 'block';
                 } else {
                     statusEl.textContent = 'Upload failed: ' + data.message;
