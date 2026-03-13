@@ -24,6 +24,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'https://premium-promoters.com',
+    'https://www.premium-promoters.com',
     'https://currently-prepare-shannon-massage.trycloudflare.com',
     /\.trycloudflare\.com$/,
     /\.vercel\.app$/,
