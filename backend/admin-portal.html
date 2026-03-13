@@ -578,11 +578,27 @@
                     </div>
                     <div class="form-group">
                         <label>Icon Name (lucide-react)</label>
-                        <input type="text" name="icon" required placeholder="e.g., Code2">
+                        <input type="text" name="icon" required placeholder="e.g., Code2" list="iconList">
+                        <datalist id="iconList">
+                            <option value="Code2">Code2 - Coding/Development</option>
+                            <option value="Film">Film - Video/Animation</option>
+                            <option value="Briefcase">Briefcase - Corporate/Business</option>
+                            <option value="Smartphone">Smartphone - Mobile Apps</option>
+                            <option value="Search">Search - SEO</option>
+                            <option value="Megaphone">Megaphone - Marketing</option>
+                            <option value="PenTool">PenTool - Logo/Design</option>
+                            <option value="Palette">Palette - Graphic Design</option>
+                        </datalist>
+                        <small style="color: rgba(255,255,255,0.6); font-size: 12px; display: block; margin-top: 5px;">
+                            💡 Choose from the dropdown or type: Code2, Film, Briefcase, Smartphone, Search, Megaphone, PenTool, Palette
+                        </small>
                     </div>
                     <div class="form-group">
                         <label>Benefits (one per line)</label>
-                        <textarea name="benefits" rows="5" placeholder="Enter each benefit on a new line"></textarea>
+                        <textarea name="benefits" rows="5" placeholder="Enter each benefit on a new line&#10;Example:&#10;Fast turnaround time&#10;24/7 customer support&#10;Money-back guarantee"></textarea>
+                        <small style="color: rgba(255,255,255,0.6); font-size: 12px; display: block; margin-top: 5px;">
+                            💡 These benefits will appear when users click "See Benefits" on the service card
+                        </small>
                     </div>
                     <div class="form-group">
                         <label>Image</label>
@@ -611,6 +627,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Icon</th>
                             <th>Category</th>
                             <th>Description</th>
                             <th>Actions</th>
@@ -899,6 +916,7 @@
                 tbody.innerHTML = data.map(s => `
                     <tr>
                         <td>${s.title}</td>
+                        <td><code style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-size: 12px;">${s.icon}</code></td>
                         <td>${s.category}</td>
                         <td>${s.description.substring(0, 50)}...</td>
                         <td class="actions">

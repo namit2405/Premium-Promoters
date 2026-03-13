@@ -148,15 +148,15 @@ export default function ServicesSection() {
               <motion.div
                 key={service.title}
                 data-ocid={`services.item.${i + 1}`}
-                className="glass-card rounded-2xl overflow-hidden cursor-pointer"
+                className="glass-card rounded-2xl overflow-hidden cursor-pointer min-h-[350px] sm:min-h-[400px]"
                 variants={cardVariants}
-                style={{ perspective: "1000px", transformStyle: "preserve-3d", minHeight: "400px" }}
+                style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
               >
                 <motion.div
-                  className="relative w-full"
+                  className="relative w-full min-h-[350px] sm:min-h-[400px]"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{ transformStyle: "preserve-3d", minHeight: "400px" }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   {/* Front Side */}
                   <div
