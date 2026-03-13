@@ -150,13 +150,13 @@ export default function ServicesSection() {
                 data-ocid={`services.item.${i + 1}`}
                 className="glass-card rounded-2xl overflow-hidden cursor-pointer"
                 variants={cardVariants}
-                style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+                style={{ perspective: "1000px", transformStyle: "preserve-3d", minHeight: "400px" }}
               >
                 <motion.div
-                  className="relative w-full h-full"
+                  className="relative w-full"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{ transformStyle: "preserve-3d" }}
+                  style={{ transformStyle: "preserve-3d", minHeight: "400px" }}
                 >
                   {/* Front Side */}
                   <div
@@ -258,13 +258,13 @@ export default function ServicesSection() {
                 data-ocid={`services.item.${i + 5}`}
                 className="glass-card rounded-2xl overflow-hidden cursor-pointer"
                 variants={cardVariants}
-                style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+                style={{ perspective: "1000px", transformStyle: "preserve-3d", minHeight: "350px" }}
               >
                 <motion.div
-                  className="relative w-full h-full"
+                  className="relative w-full"
                   animate={{ rotateY: isFlipped ? 180 : 0 }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{ transformStyle: "preserve-3d" }}
+                  style={{ transformStyle: "preserve-3d", minHeight: "350px" }}
                 >
                   {/* Front Side */}
                   <div
