@@ -212,6 +212,45 @@
             color: #1a1a2e;
             border-color: #f4c430;
         }
+        
+        /* Image Upload Styles */
+        .image-upload-container {
+            margin-bottom: 15px;
+        }
+        .image-upload-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .image-upload-wrapper input[type="file"] {
+            display: none;
+        }
+        .upload-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .upload-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #f4c430;
+        }
+        .image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .upload-status {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 5px;
+        }
 
         /* Responsive Styles */
         @media (max-width: 1024px) {
@@ -481,9 +520,15 @@
                         <input type="text" name="avatar" required placeholder="e.g., JD">
                     </div>
                     <div class="form-group">
-                        <label>Client Image URL</label>
-                        <input type="text" name="image" placeholder="/assets/images/client2.jpg">
-                        <small style="color: rgba(255,255,255,0.6); font-size: 12px;">Available: client2.jpg, client3.jpg, client4.jpg, client5.jpg, happy client.jpg</small>
+                        <label>Client Image</label>
+                        <div class="image-upload-wrapper">
+                            <label for="testimonialImageUpload" class="upload-btn">Choose Image</label>
+                            <input type="file" id="testimonialImageUpload" accept="image/*">
+                            <img id="testimonialImagePreview" class="image-preview" style="display:none;">
+                        </div>
+                        <input type="hidden" name="image" id="testimonialImageUrl">
+                        <div id="testimonialUploadStatus" class="upload-status"></div>
+                        <small style="color: rgba(255,255,255,0.6); font-size: 12px;">Or use existing: client2.jpg, client3.jpg, client4.jpg, client5.jpg, happy client.jpg</small>
                     </div>
                     <div class="form-group">
                         <label>Rating</label>
@@ -536,8 +581,14 @@
                         <input type="text" name="icon" required placeholder="e.g., Code2">
                     </div>
                     <div class="form-group">
-                        <label>Image URL</label>
-                        <input type="text" name="image" required placeholder="/assets/images/...">
+                        <label>Image</label>
+                        <div class="image-upload-wrapper">
+                            <label for="serviceImageUpload" class="upload-btn">Choose Image</label>
+                            <input type="file" id="serviceImageUpload" accept="image/*">
+                            <img id="serviceImagePreview" class="image-preview" style="display:none;">
+                        </div>
+                        <input type="hidden" name="image" id="serviceImageUrl" required>
+                        <div id="serviceUploadStatus" class="upload-status"></div>
                     </div>
                     <div class="form-group">
                         <label>Category</label>
@@ -588,8 +639,14 @@
                         <input type="text" name="tag" required placeholder="e.g., Web Design">
                     </div>
                     <div class="form-group">
-                        <label>Image URL</label>
-                        <input type="text" name="image" required placeholder="/assets/images/...">
+                        <label>Image</label>
+                        <div class="image-upload-wrapper">
+                            <label for="portfolioImageUpload" class="upload-btn">Choose Image</label>
+                            <input type="file" id="portfolioImageUpload" accept="image/*">
+                            <img id="portfolioImagePreview" class="image-preview" style="display:none;">
+                        </div>
+                        <input type="hidden" name="image" id="portfolioImageUrl" required>
+                        <div id="portfolioUploadStatus" class="upload-status"></div>
                     </div>
                     <div class="form-group">
                         <label>Project URL (optional)</label>
@@ -1193,6 +1250,80 @@
         document.getElementById('messageModal').addEventListener('click', (e) => {
             if (e.target.id === 'messageModal') {
                 closeMessageModal();
+            }
+        });
+
+        // Image Upload Function
+        async function uploadImage(file, statusElementId, previewElementId, urlInputId) {
+            const statusEl = document.getElementById(statusElementId);
+            const previewEl = document.getElementById(previewElementId);
+            const urlInput = document.getElementById(urlInputId);
+            
+            statusEl.textContent = 'Uploading...';
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            try {
+                const res = await fetch(`${API_URL}/upload`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok) {
+                    statusEl.textContent = 'Upload successful!';
+                    statusEl.style.color = '#2ecc71';
+                    urlInput.value = data.imageUrl;
+                    
+                    // Show preview
+                    previewEl.src = `${API_URL.replace('/api', '')}${data.imageUrl}`;
+                    previewEl.style.display = 'block';
+                } else {
+                    statusEl.textContent = 'Upload failed: ' + data.message;
+                    statusEl.style.color = '#e74c3c';
+                }
+            } catch (error) {
+                statusEl.textContent = 'Upload error';
+                statusEl.style.color = '#e74c3c';
+            }
+        }
+        
+        // Testimonial Image Upload
+        document.getElementById('testimonialImageUpload')?.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                uploadImage(
+                    e.target.files[0],
+                    'testimonialUploadStatus',
+                    'testimonialImagePreview',
+                    'testimonialImageUrl'
+                );
+            }
+        });
+        
+        // Service Image Upload
+        document.getElementById('serviceImageUpload')?.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                uploadImage(
+                    e.target.files[0],
+                    'serviceUploadStatus',
+                    'serviceImagePreview',
+                    'serviceImageUrl'
+                );
+            }
+        });
+        
+        // Portfolio Image Upload
+        document.getElementById('portfolioImageUpload')?.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                uploadImage(
+                    e.target.files[0],
+                    'portfolioUploadStatus',
+                    'portfolioImagePreview',
+                    'portfolioImageUrl'
+                );
             }
         });
     </script>
