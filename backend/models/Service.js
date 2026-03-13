@@ -17,6 +17,10 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  benefits: {
+    type: [String],
+    default: []
+  },
   category: {
     type: String,
     enum: ['featured', 'additional'],

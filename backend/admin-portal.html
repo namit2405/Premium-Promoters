@@ -581,6 +581,10 @@
                         <input type="text" name="icon" required placeholder="e.g., Code2">
                     </div>
                     <div class="form-group">
+                        <label>Benefits (one per line)</label>
+                        <textarea name="benefits" rows="5" placeholder="Enter each benefit on a new line"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label>Image</label>
                         <div class="image-upload-wrapper">
                             <label for="serviceImageUpload" class="upload-btn">Choose Image</label>
@@ -898,7 +902,7 @@
                         <td>${s.category}</td>
                         <td>${s.description.substring(0, 50)}...</td>
                         <td class="actions">
-                            <button class="btn btn-secondary" onclick="editService('${s._id}', '${s.title}', \`${s.description.replace(/`/g, '\\`')}\`, '${s.icon}', '${s.image}', '${s.category}')">Edit</button>
+                            <button class="btn btn-secondary" onclick='editService("${s._id}", "${s.title}", \`${s.description.replace(/`/g, '\\`')}\`, "${s.icon}", "${s.image}", "${s.category}", ${JSON.stringify(s.benefits || [])})'>Edit</button>
                             <button class="btn btn-danger" onclick="deleteService('${s._id}')">Delete</button>
                         </td>
                     </tr>
@@ -912,6 +916,13 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
+            
+            // Convert benefits from textarea to array
+            if (data.benefits) {
+                data.benefits = data.benefits.split('\n').filter(b => b.trim()).map(b => b.trim());
+            } else {
+                data.benefits = [];
+            }
             
             const url = editingServiceId 
                 ? `${API_URL}/services/${editingServiceId}`
@@ -930,10 +941,12 @@
             e.target.reset();
             editingServiceId = null;
             document.querySelector('#serviceForm button[type="submit"]').textContent = 'Add Service';
+            document.getElementById('serviceImagePreview').style.display = 'none';
+            document.getElementById('serviceUploadStatus').textContent = '';
             loadServices();
         });
 
-        function editService(id, title, description, icon, image, category) {
+        function editService(id, title, description, icon, image, category, benefits) {
             editingServiceId = id;
             const form = document.getElementById('serviceForm');
             form.title.value = title;
@@ -941,6 +954,13 @@
             form.icon.value = icon;
             form.image.value = image;
             form.category.value = category;
+            form.benefits.value = Array.isArray(benefits) ? benefits.join('\n') : '';
+            
+            // Show image preview
+            const preview = document.getElementById('serviceImagePreview');
+            preview.src = image;
+            preview.style.display = 'block';
+            
             document.querySelector('#serviceForm button[type="submit"]').textContent = 'Update Service';
             form.scrollIntoView({ behavior: 'smooth' });
         }
