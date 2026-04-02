@@ -82,7 +82,7 @@ export default function StatsSection() {
 
   const stats: Stat[] = [
     {
-      value: statsData.projectsCount,
+      value: 100,
       suffix: "+",
       prefix: "",
       label: "Projects Done",
